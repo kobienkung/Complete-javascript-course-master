@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asynchronous JavaScript</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <script>
+//        const second = () => {
+//            setTimeout(() => console.log('second'), 2000);
+//        }
+//        
+//        const first = () => {
+//            console.log('Hey, there!');
+//            second();
+//            console.log('The end')
+//        }
+//        first();
+//        
+//        const getIDs = new Promise((resolve, reject) => {
+//            setTimeout(() => resolve([34,234,533,94]), 1500)
+//        });
+//        
+//        const getRecipe = recID => {
+//          return new Promise((resolve, reject) => {
+//              setTimeout((ID) => {
+//                  const recipe = { title: 'Fresh tomato pasta', publisher: 'Jonas'};
+//                  resolve(`${ID}: ${recipe.title}`);
+//              }, 1500, recID);
+//          })  
+//        };
+//        
+//        const getRelated = publisher => 
+//            new Promise((resolve, reject) => {
+//                setTimeout((pub) => {
+//                    const recipe = {title: 'Italian pizza'};
+//                    resolve(`${pub}: ${recipe.title}`);
+//                }, 1500, publisher)
+//            })
+//        ;
+//        
+//        getIDs
+//        .then( IDs => {   
+//            console.log(IDs);
+//            return getRecipe(IDs[2]);
+//        })
+//        .then( recipe => {
+//            console.log(recipe);
+//            return getRelated(recipe);
+//        })
+//        .then( recipe => {
+//            console.log(recipe);
+//        })
+//        .catch( error => {
+//            console.log(`error`);
+//        });
+//        async function getRecipesAW() {
+//            const IDs = await getIDs;
+//            console.log(IDs);
+//            const recipe = await getRecipe(IDs[2]);
+//            console.log(recipe);
+//            const related = await getRelated(recipe);
+//            console.log(related);
+//            
+//            return recipe;
+//        }
+//        
+//        getRecipesAW().then(result => console.log(`${result} is the best`));
+        
+        function getWeather(woeid) {
+        fetch (`https://crossorigin.me/https://www.metaweather.com/api/location/${woeid}/`)
+        .then(result => {
+            console.log(result);
+            return result.json();
+        })
+        .then(data => {
+            const today = data.consolidated_weather[0];
+            console.log(`Today temperature in ${data.title} stays ${today.min_temp} and ${today.max_temp} celcius.`)
+        })
+        .catch(error => console.log(error));
+        }
+        
+        getWeather(2487956);
+        getWeather(44418);
+        
+        
+        
+        
+        async function getWeatherAW(woeid) {
+            try {
+                const result = await fetch (`https://crossorigin.me/https://www.metaweather.com/api/location/${woeid}/`);
+                const data = await result.json;
+                const tomorrow = data.consolidated_weather[1];
+                console.log(`Tomorrow temperature in ${data.title} stays ${tomorrow.min_temp} and ${tomorrow.max_temp} celcius.`)
+                return data;
+                } catch(error) {
+                alert(error);
+                }
+            }
+        getWeather(2487956);
+        getWeather(44418).then(data => {
+            let dataLondon
+            dataLondon = data;
+            console.log(dataLondon);
+        });
+        
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
